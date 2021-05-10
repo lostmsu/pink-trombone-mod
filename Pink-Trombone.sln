@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31220.234
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{0730FE6B-ADBA-4579-B693-426280EE8A81}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CHANGES.md = CHANGES.md
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "play", "play\play.csproj", "{0FA4F0F4-4B85-4431-9D6E-08748FB9EBB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PinkTrombone", "src\PinkTrombone.csproj", "{7A0AF849-1A13-4CA1-9762-A4CD6F3F0446}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FA4F0F4-4B85-4431-9D6E-08748FB9EBB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA4F0F4-4B85-4431-9D6E-08748FB9EBB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA4F0F4-4B85-4431-9D6E-08748FB9EBB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA4F0F4-4B85-4431-9D6E-08748FB9EBB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A0AF849-1A13-4CA1-9762-A4CD6F3F0446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A0AF849-1A13-4CA1-9762-A4CD6F3F0446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A0AF849-1A13-4CA1-9762-A4CD6F3F0446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A0AF849-1A13-4CA1-9762-A4CD6F3F0446}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06CE6DE9-2A12-4C29-899C-8BFCAC791F37}
+	EndGlobalSection
+EndGlobal

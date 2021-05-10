@@ -1,15 +1,59 @@
-# pink-trombone-mod
+# Pink Trombone
+
+[![Pink Trombone on NuGet](https://img.shields.io/nuget/v/PinkTrombone)](https://www.nuget.org/packages/PinkTrombone/)
 
 This is a revised version of the Pink Trombone speech
 synthesizer originally developed by Neil Thapen in 2017.
 The original source code was modularized and converted to TypeScript.
+Then the TypeScript code was converted to C#.
 
 Pink Trombone uses two-dimensional
 [digital waveguide synthesis](https://en.wikipedia.org/wiki/Digital_waveguide_synthesis)
 to synthesize human speech sounds.
 
 **Online demo**: [chdh.github.io/pink-trombone-mod](https://chdh.github.io/pink-trombone-mod)<br>
-**NPM package**: [pink-trombone-mod](https://www.npmjs.com/package/pink-trombone-mod)<br>
+
+# Sample code
+
+You can easily connect Pink Trombone to any audio framework, that accepts
+`float32` inputs. [An example](play) for [NAudio](https://github.com/naudio/NAudio):
+
+```csharp
+public sealed class PinkTromboneSampleProvider : ISampleProvider {
+    public WaveFormat WaveFormat { get; }
+
+    readonly PinkThrombone pinkThrombone;
+
+    public PinkTromboneSampleProvider(int sampleRate) {
+        this.WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, 1);
+        this.pinkThrombone = new PinkThrombone(sampleRate);
+    }
+
+    public int Read(float[] buffer, int offset, int count) {
+        this.pinkThrombone.Synthesize(buffer.AsSpan().Slice(offset, count));
+        return count;
+    }
+}
+
+var player = new WaveOutEvent {
+    NumberOfBuffers = 2,
+    DesiredLatency = 100,
+};
+var trombone = new PinkTromboneSampleProvider(sampleRate: 48000);
+player.Init(trombone);
+
+player.Play();
+
+Console.WriteLine("Press any key to stop");
+Console.ReadKey();
+
+player.Stop();
+```
+
+# .NET Framework 4
+
+This package can be retrofitted to .NET 4/.NET Standard 1.x by replacing all `float`s
+with `double`s and `MathF` references with `Math`.
 
 ## Bibliographic references cited by Neil Thapen
 
