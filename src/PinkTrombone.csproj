@@ -7,8 +7,7 @@
 
     <VersionPrefix>0.0.1</VersionPrefix>
     <Description>
-      Realistic vocal tract simulator, capable of producing audio in
-      a manner people do. Online demo: https://chdh.github.io/pink-trombone-mod
+      Realistic vocal tract simulator, capable of producing audio in a manner people do. Online demo: https://chdh.github.io/pink-trombone-mod
     </Description>
     <Authors>Neil Thapen,Christian d'Heureuse,Victor Nova</Authors>
     <Product>Pink Trombone</Product>
