@@ -21,8 +21,32 @@
             this.shaper = new TractShaper(this.tract);
         }
 
-        public void Reset() {
-            this.CalculateNewBlockParameters(0);
+        public float TargetFrequency {
+            get => this.glottis.TargetFrequency;
+            set => this.glottis.TargetFrequency = value;
+        }
+        /// <summary>
+        /// 0..1
+        /// </summary>
+        public float TargetTenseness {
+            get => this.glottis.TargetTenseness;
+            set => this.glottis.TargetTenseness = value;
+        }
+        public float VibratoAmount {
+            get => this.glottis.VibratoAmount;
+            set => this.glottis.VibratoAmount = value;
+        }
+        public float VibratoFrequency {
+            get => this.glottis.VibratoFrequency;
+            set => this.glottis.VibratoFrequency = value;
+        }
+
+        /// <summary>
+        /// Set <see cref="TargetFrequency"/> to the specified musical note.
+        /// </summary>
+        /// <param name="semitone">Semitone, based at A4.</param>
+        public void SetMusicalNote(float semitone) {
+            this.glottis.SetMusicalNote(semitone);
         }
 
         public void Synthesize(Span<float> buf) {
@@ -33,6 +57,10 @@
                 this.SynthesizeBlock(blockBuf);
                 p += blockLength;
             }
+        }
+
+        public void Reset() {
+            this.CalculateNewBlockParameters(0);
         }
 
         int totalBlocks = 0;

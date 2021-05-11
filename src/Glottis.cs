@@ -5,7 +5,15 @@
         public bool AlwaysVoice { get; set; } = true;
         public bool AutoWobble { get; set; } = true;
         public bool IsTouched { get; set; } = false;
-        public float TargetTenseness { get; set; } = 0.6f;
+        float targetTenseness = 0.6f;
+        public float TargetTenseness {
+            get => this.targetTenseness;
+            set {
+                if (value < 0 || value > 1)
+                    throw new ArgumentOutOfRangeException(nameof(this.TargetTenseness));
+                this.targetTenseness = value;
+            }
+        }
         public float TargetFrequency { get; set; } = 140;
         public float VibratoAmount { get; set; } = 0.005f;
         public float VibratoFrequency { get; set; } = 6;
@@ -31,6 +39,15 @@
             this.sampleRate = sampleRate;
             this.aspirationNoiseSource = Noise.CreateFilteredNoiseSource(500, 0.5f, sampleRate, 0x8000);
             this.SetupWaveform(0);
+        }
+
+        const float A4 = 440;
+        /// <summary>
+        /// Set <see cref="TargetFrequency"/> to the specified musical note.
+        /// </summary>
+        /// <param name="semitone">Semitone, based at A4.</param>
+        public void SetMusicalNote(float semitone) {
+            this.TargetFrequency = A4 * MathF.Pow(2, semitone * (1f / 12));
         }
 
         /// <param name="lambda">used for linear interpolation between the calculated frequency and tenseness values.</param>
