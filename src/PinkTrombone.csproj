@@ -5,7 +5,7 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
 
-    <VersionPrefix>0.0.1</VersionPrefix>
+    <VersionPrefix>0.0.2</VersionPrefix>
     <Description>
       Realistic vocal tract simulator, capable of producing audio in a manner people do. Online demo: https://chdh.github.io/pink-trombone-mod
     </Description>
