@@ -29,7 +29,7 @@
         internal readonly double[] diameter;
 
         internal readonly List<Transient> transients = new();
-        readonly List<TurbulencePoint> turbulencePoints = new();
+        internal readonly List<TurbulencePoint> turbulencePoints = new();
 
         readonly double[] noseRight, noseLeft;
         readonly double[] noseJunctionOutputRight, noseJunctionOutputLeft;

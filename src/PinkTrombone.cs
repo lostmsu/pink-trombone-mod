@@ -1,5 +1,6 @@
 ﻿namespace Vocal {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using static PinkTrombone.Arg;
 
@@ -111,6 +112,7 @@
             get => this.glottis.AutoWobble;
             set => this.glottis.AutoWobble = value;
         }
+        public IList<TurbulencePoint> TurbulencePoints => this.tract.turbulencePoints;
 
         /// <summary>
         /// Set <see cref="TargetFrequency"/> to the specified musical note.
