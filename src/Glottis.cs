@@ -1,5 +1,6 @@
 ﻿namespace Vocal {
     using System;
+    using static PinkTrombone.Arg;
 
     internal class Glottis {
         public bool AlwaysVoice { get; set; } = true;
@@ -23,7 +24,15 @@
         readonly int sampleRate;
         long sampleCount;
         float intensity = 0;
+        public float Intensity {
+            get => this.intensity;
+            set => this.intensity = Check01(value);
+        }
         float loudness = 1;
+        public float Loudness {
+            get => this.loudness;
+            set => this.loudness = Check01(value);
+        }
         float smoothFrequency = 140;
         float timeInWaveform;
 

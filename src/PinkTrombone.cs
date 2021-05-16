@@ -1,6 +1,7 @@
 ﻿namespace Vocal {
     using System;
     using System.Diagnostics;
+    using static PinkTrombone.Arg;
 
     public sealed class PinkThrombone {
         const int maxBlockLength = 512;
@@ -21,24 +22,94 @@
             this.shaper = new TractShaper(this.tract);
         }
 
+        /// <summary>
+        /// -1..+1
+        /// </summary>
+        [Obsolete("NotImplemented", error: true)]
+        public float Noise {
+            get => throw new NotImplementedException();
+            set {
+                if (value < -1 || value > 1)
+                    throw new ArgumentOutOfRangeException(nameof(this.Noise));
+                throw new NotImplementedException();
+            }
+        }
+        /// <summary>
+        /// 0..1
+        /// </summary>
+        public float Intensity {
+            get => this.glottis.Intensity;
+            set => this.glottis.Intensity = Check01(value);
+        }
+        /// <summary>
+        /// 0..1
+        /// </summary>
+        public float Loudness {
+            get => this.glottis.Loudness;
+            set => this.glottis.Loudness = Check01(value);
+        }
+        /// <summary>
+        /// 0..
+        /// </summary>
         public float TargetFrequency {
             get => this.glottis.TargetFrequency;
-            set => this.glottis.TargetFrequency = value;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(this.TargetFrequency));
+                this.glottis.TargetFrequency = value;
+            }
         }
         /// <summary>
         /// 0..1
         /// </summary>
         public float TargetTenseness {
             get => this.glottis.TargetTenseness;
-            set => this.glottis.TargetTenseness = value;
+            set => this.glottis.TargetTenseness = Check01(value);
         }
-        public float VibratoAmount {
+        /// <summary>
+        /// 0..44 <see cref="Tract.n"/>
+        /// </summary>
+        public double TongueIndex {
+            get => this.shaper.TongueIndex;
+            set {
+                if (value < -1 || value > Tract.n + 1)
+                    throw new ArgumentOutOfRangeException(nameof(this.TongueIndex));
+                this.shaper.TongueIndex = value;
+            }
+        }
+        /// <summary>
+        /// 0..3(?)
+        /// </summary>
+        public float TongueDiameter {
+            get => this.shaper.TongueDiameter;
+            set => this.shaper.TongueDiameter = value;
+        }
+
+        /// <summary>
+        /// 0..
+        /// </summary>
+        public float VibratoGain {
             get => this.glottis.VibratoAmount;
-            set => this.glottis.VibratoAmount = value;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(this.VibratoGain));
+                this.glottis.VibratoAmount = value;
+            }
         }
+        /// <summary>
+        /// 0..
+        /// </summary>
         public float VibratoFrequency {
             get => this.glottis.VibratoFrequency;
-            set => this.glottis.VibratoFrequency = value;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(this.VibratoFrequency));
+                this.glottis.VibratoFrequency = value;
+            }
+        }
+        public bool VibratoWobble {
+            get => this.glottis.AutoWobble;
+            set => this.glottis.AutoWobble = value;
         }
 
         /// <summary>
@@ -76,7 +147,7 @@
                 buf[i] = (vocalOutput1 + vocalOutput2) * 0.125f;
             }
             this.totalBlocks++;
-            Debug.WriteLine($"Block: {totalBlocks}");
+            Debug.WriteLine($"Block: {this.totalBlocks}");
         }
 
         void CalculateNewBlockParameters(float deltaTime) {
