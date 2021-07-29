@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Threading;
     using NAudio.Wave;
+    using Troschuetz.Random.Generators;
 
     class Program {
         static void Main() {
@@ -10,7 +11,8 @@
                 NumberOfBuffers = 2,
                 DesiredLatency = 100,
             };
-            var trombone = new PinkTromboneSampleProvider(sampleRate: 48000);
+            var trombone = new PinkTromboneSampleProvider(sampleRate: 48000,
+                                                          new XorShift128Generator());
             player.Init(trombone);
 
             player.Play();

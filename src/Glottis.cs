@@ -1,5 +1,7 @@
 ﻿namespace Vocal {
     using System;
+
+    using Troschuetz.Random;
     using static PinkTrombone.Arg;
 
     internal class Glottis {
@@ -43,10 +45,12 @@
 
         float waveformLength;
 
-        public Glottis(int sampleRate) {
+        public Glottis(int sampleRate, IGenerator random) {
             if (sampleRate <= 0) throw new ArgumentOutOfRangeException(nameof(sampleRate));
+            if (random is null) throw new ArgumentNullException(nameof(random));
             this.sampleRate = sampleRate;
-            this.aspirationNoiseSource = Noise.CreateFilteredNoiseSource(500, 0.5f, sampleRate, 0x8000);
+            this.NoiseGenerator = new NoiseGenerator((ushort)random.Seed);
+            this.aspirationNoiseSource = Noise.CreateFilteredNoiseSource(500, 0.5f, sampleRate, 0x8000, random);
             this.SetupWaveform(0);
         }
 

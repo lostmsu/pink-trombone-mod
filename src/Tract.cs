@@ -2,6 +2,8 @@
     using System;
     using System.Collections.Generic;
 
+    using Troschuetz.Random;
+
     internal class Tract {
         readonly Glottis glottis;
         readonly int sampleRate;
@@ -43,13 +45,14 @@
         double newReflectionLeft, newReflectionRight;
         double reflectionNose, newReflectionNose;
 
-        public Tract(Glottis glottis, int sampleRate) {
+        public Tract(Glottis glottis, int sampleRate, IGenerator random) {
             if (glottis is null) throw new ArgumentNullException(nameof(glottis));
             if (sampleRate <= 0) throw new ArgumentOutOfRangeException(nameof(sampleRate));
+            if (random is null) throw new ArgumentNullException(nameof(random));
 
             this.glottis = glottis;
             this.sampleRate = sampleRate;
-            this.fricationNoiseSource = Noise.CreateFilteredNoiseSource(1000, 0.5, sampleRate, 0x8000);
+            this.fricationNoiseSource = Noise.CreateFilteredNoiseSource(1000, 0.5, sampleRate, 0x8000, random);
             this.diameter = new double[n];
             this.right = new double[n];
             this.left = new double[n];
@@ -185,8 +188,8 @@
                     continue;
                 }
                 double amplitude = trans.Strength * Math.Pow(2, -trans.Exponent * timeAlive);
-                this.right[trans.Position] += amplitude / 2;
-                this.left[trans.Position] += amplitude / 2;
+                this.right[trans.Position] += amplitude * 0.5;
+                this.left[trans.Position] += amplitude * 0.5;
             }
         }
 
@@ -221,12 +224,12 @@
             double noise0 = turbulenceNoise * (1 - delta) * thinness0 * openness;
             double noise1 = turbulenceNoise * delta * thinness0 * openness;
             if (i + 1 < n) {
-                this.right[i + 1] += noise0 / 2;
-                this.left[i + 1] += noise0 / 2;
+                this.right[i + 1] += noise0 * 0.5;
+                this.left[i + 1] += noise0 * 0.5;
             }
             if (i + 2 < n) {
-                this.right[i + 2] += noise1 / 2;
-                this.left[i + 2] += noise1 / 2;
+                this.right[i + 2] += noise1 * 0.5;
+                this.left[i + 2] += noise1 * 0.5;
             }
         }
     }

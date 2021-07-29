@@ -2,6 +2,9 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+
+    using Troschuetz.Random;
+
     using static PinkTrombone.Arg;
 
     public sealed class PinkThrombone {
@@ -12,14 +15,15 @@
         readonly TractShaper shaper;
         readonly int sampleRate;
 
-        public PinkThrombone(int sampleRate) {
+        public PinkThrombone(int sampleRate, IGenerator random) {
             if (sampleRate <= 0 || sampleRate >= int.MaxValue / 2)
                 throw new ArgumentOutOfRangeException(nameof(sampleRate));
+            if (random is null) throw new ArgumentNullException(nameof(random));
 
             this.sampleRate = sampleRate;
-            this.glottis = new Glottis(sampleRate);
+            this.glottis = new Glottis(sampleRate, random);
             // tract runs at twice the sample rate
-            this.tract = new Tract(this.glottis, sampleRate: 2 * sampleRate);
+            this.tract = new Tract(this.glottis, sampleRate: 2 * sampleRate, random);
             this.shaper = new TractShaper(this.tract);
         }
 

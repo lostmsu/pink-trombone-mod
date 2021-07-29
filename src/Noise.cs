@@ -1,16 +1,17 @@
-﻿using System;
+﻿namespace Vocal {
+    using System;
 
-namespace Vocal {
+    using Troschuetz.Random;
+
     internal class Noise {
-        internal static Func<float> CreateFilteredNoiseSource(double f0, double q, int sampleRate, int bufferSize) {
-            Func<double>? whiteNoise = CreateBufferedWhiteNoiseSource(bufferSize);
+        internal static Func<float> CreateFilteredNoiseSource(double f0, double q, int sampleRate, int bufferSize, IGenerator random) {
+            Func<double>? whiteNoise = CreateBufferedWhiteNoiseSource(bufferSize, random);
             Func<double, float>? filter = CreateBandPassFilter(f0, q, sampleRate);
             return () => filter(whiteNoise());
         }
 
-        static Func<double> CreateBufferedWhiteNoiseSource(int bufferSize) {
-            double[]? buf = new double[bufferSize];
-            var random = new Random();
+        static Func<double> CreateBufferedWhiteNoiseSource(int bufferSize, IGenerator random) {
+            double[] buf = new double[bufferSize];
             for (int i = 0; i < bufferSize; i++)
                 // -1 .. 1
                 buf[i] = 2 * random.NextDouble() - 1;
