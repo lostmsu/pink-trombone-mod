@@ -16,8 +16,8 @@
         public const int NoseLength = 28;
         public const int NoseStart = n - NoseLength + 1;
 
-        const float GlottalReflection = 0.75f;
-        const float LipReflection = -0.85f;
+        const double GlottalReflection = 0.75;
+        const double LipReflection = -0.85;
 
         long sampleCount = 0;
         internal float time = 0;
@@ -114,7 +114,7 @@
             this.newReflectionNose = (Math.Abs(sum) > 1E-6) ? (2 * velumA - sum) / sum : 1;
         }
 
-        public float Step(float glottalOutput, float lambda) {
+        public float Step(double glottalOutput, double lambda) {
 
             // mouth
             this.ProcessTransients();

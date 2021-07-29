@@ -103,7 +103,7 @@
             } else if (this.TargetFrequency > this.smoothFrequency) {
                 this.smoothFrequency = MathF.Min(this.smoothFrequency * (1 + 0.1f * deltaTime), this.TargetFrequency);
             } else if (this.TargetFrequency < this.smoothFrequency) {
-                this.smoothFrequency = Math.Max(this.smoothFrequency / (1 + 0.1f * deltaTime), this.TargetFrequency);
+                this.smoothFrequency = MathF.Max(this.smoothFrequency / (1 + 0.1f * deltaTime), this.TargetFrequency);
             }
             this.oldFrequency = this.newFrequency;
             this.newFrequency = MathF.Max(10, this.smoothFrequency * (1 + this.CalculateVibrato(time)));

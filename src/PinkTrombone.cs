@@ -85,7 +85,7 @@
         /// <summary>
         /// 0..3(?)
         /// </summary>
-        public float TongueDiameter {
+        public double TongueDiameter {
             get => this.shaper.TongueDiameter;
             set => this.shaper.TongueDiameter = value;
         }
@@ -145,9 +145,9 @@
             float deltaTime = buf.Length * 1f / this.sampleRate;
             this.CalculateNewBlockParameters(deltaTime);
             for (int i = 0; i < buf.Length; i++) {
-                float lambda1 = i * 1f / buf.Length;
-                float lambda2 = (i + 0.5f) / buf.Length;
-                float glottalOutput = this.glottis.Step(lambda1);
+                double lambda1 = i * 1.0 / buf.Length;
+                double lambda2 = (i + 0.5) / buf.Length;
+                double glottalOutput = this.glottis.Step((float)lambda1);
                 float vocalOutput1 = this.tract.Step(glottalOutput, lambda1);
                 float vocalOutput2 = this.tract.Step(glottalOutput, lambda2);
                 buf[i] = (vocalOutput1 + vocalOutput2) * 0.125f;

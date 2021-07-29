@@ -1,18 +1,18 @@
 ﻿namespace Vocal {
     using System;
     internal class TractShaper {
-        const float gridOffset = 1.7f;
+        const double gridOffset = 1.7;
 
         readonly Tract tract;
 
-        const float movementSpeed = 15;
+        const double movementSpeed = 15;
         public float VelumOpenTarget { get; set; } = 0.4f;
         public float VelumClosedTarget { get; set; } = 0.01f;
 
         readonly double[] targetDiameter;
         public float VelumTarget { get; set; }
         public double TongueIndex { get; set; } = 12.9;
-        public float TongueDiameter { get; set; } = 2.43f;
+        public double TongueDiameter { get; set; } = 2.43;
 
         int lastObstruction = -1;
 
@@ -52,7 +52,7 @@
         }
 
         // Adjusts the shape of the tract towards the target values.
-        public void AdjustTractShape(float deltaTime) {
+        public void AdjustTractShape(double deltaTime) {
             double amount = deltaTime * movementSpeed;
             int newLastObstruction = -1;
             for (int i = 0; i < Tract.n; i++) {
@@ -91,7 +91,7 @@
         void ShapeNoise(bool velumOpen) {
             this.VelumTarget = velumOpen ? this.VelumOpenTarget : this.VelumClosedTarget;
             for (int i = 0; i < Tract.NoseLength; i++) {
-                double d = i * 2f / Tract.NoseLength;
+                double d = i * 2.0 / Tract.NoseLength;
                 double diameter;
                 if (i == 0)
                     diameter = this.VelumTarget;
